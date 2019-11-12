@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import uuid from 'uuid';
+
 import Todos from './components/Todos';
+import Header from './components/layout/header';
+import AddTodo from './components/AddTodo';
 
 import './App.css';
 
@@ -8,17 +12,17 @@ class App extends Component {
   state = {
     todos: [
       {
-        id: 1,
+        id: uuid.v4(),
         title: 'take out the trash',
         completed: false
       },
       {
-        id: 2,
+        id: uuid.v4(),
         title: 'play video games',
         completed: true
       },
       {
-        id: 3,
+        id: uuid.v4(),
         title: 'do your homework',
         completed: false
       }
@@ -41,12 +45,25 @@ class App extends Component {
     ]});
   }
 
+  addTodo = (title) => {
+    const newTodo = {
+      id: uuid.v4(),
+      title,
+      completed: false
+    }
+    this.setState({ todos: [...this.state.todos, newTodo] });
+  }
+
   render() {
     return (
       <div className="App">
-        <Todos todos={this.state.todos} 
-        markComplete={this.markComplete} 
-        deleteTodo={this.deleteTodo}/>
+        <div className="container">
+          <Header />
+          <AddTodo addTodo={this.addTodo}/>
+          <Todos todos={this.state.todos} 
+          markComplete={this.markComplete} 
+          deleteTodo={this.deleteTodo}/>
+        </div>
       </div>
     )
   }
